@@ -29,6 +29,11 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
+// Ngrx
+import { StoreModule } from "@ngrx/store";
+import { appReducer } from "./app-reducer";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +56,17 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    StoreModule.forRoot( appReducer ),
+    // Instrumentation must be imported after importing StoreModule (config is optional)
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+      autoPause: true, // Pauses recording actions and state changes when the extension window is not open
+      features: {
+        persist: true,
+        jump: true
+      }
+    }),
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase }
