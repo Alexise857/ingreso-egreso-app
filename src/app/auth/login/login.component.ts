@@ -65,7 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.router.navigate(['/'])
       } )
       .catch( err => {
-        console.log({err})
         this.store.dispatch( UI.stopLoading() )
         Swal.fire({
           icon: 'error',
