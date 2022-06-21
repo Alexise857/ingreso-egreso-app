@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     })
     this.uiSubscription = this.store.select('ui').subscribe( (ui) => {
                           this.loading = ui.isLoading
-                          console.log('cargando subs')
                           } )
   }
 
@@ -62,7 +61,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.signIn( email, password )
       .then( user => {
         // Swal.close()
-        console.log({ user })
         this.store.dispatch( UI.stopLoading() )
         this.router.navigate(['/'])
       } )
